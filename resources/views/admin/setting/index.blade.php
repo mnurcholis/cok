@@ -11,7 +11,7 @@
 
                         <!-- Horizontal Form -->
                         <div class="row mb-3">
-                            <label for="inputEmail3" class="col-sm-3 col-form-label">App Name</label>
+                            <label for="app_name" class="col-sm-3 col-form-label">App Name</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="app_name" name="app_name"
                                     value="{{ $setting->app_name }}">
@@ -27,10 +27,10 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Logo Image</label>
+                            <label for="logo_image" class="col-md-4 col-lg-3 col-form-label">Logo Image</label>
                             <div class="col-md-8 col-lg-9">
                                 <div id="uploaded_image">
-                                    <img id="view_logo" src="/assets/img/{{ $setting->logo }}" alt="Logo Image"
+                                    <img id="view_logo" src="{{ url('') }}/assets/img/{{ $setting->logo }}" alt="Logo Image"
                                         class="col-md-12 col-lg-6 col-xl-4 mb-2">
                                 </div>
                                 <div class="pt-2">
@@ -42,10 +42,10 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Favicon Image</label>
+                            <label for="favicon_image" class="col-md-4 col-lg-3 col-form-label">Favicon Image</label>
                             <div class="col-md-8 col-lg-9">
                                 <div id="uploaded_favicon">
-                                    <img id="view_favicon" src="/assets/img/{{ $setting->favicon }}" alt="Favicon"
+                                    <img id="view_favicon" src="{{ url('') }}/assets/img/{{ $setting->favicon }}" alt="Favicon"
                                         class="col-md-12 col-lg-2 col-xl-2 mb-2">
                                 </div>
                                 <div class="pt-2">

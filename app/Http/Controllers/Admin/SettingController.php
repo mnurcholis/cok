@@ -20,7 +20,7 @@ class SettingController extends Controller
 
     public function save(Request $request)
     {
-        $path                   = 'assets/img';
+        $path                   = public_path('/assets/img');
 
         if ($request->file('logo_image') != null || $request->file('logo_image') != '') {
             $new_logo = "logo-" . time() . "." . $request->file('logo_image')->getClientOriginalExtension();
