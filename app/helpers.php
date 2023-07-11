@@ -17,3 +17,7 @@ function show_class($path)
 {
     return call_user_func_array('Request::is', (array)$path) ? 'show' : '';
 }
+
+function coba(){
+    return \App\Models\Settings::find(1);
+}

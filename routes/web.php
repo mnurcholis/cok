@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+Route::get('/shop-product', [App\Http\Controllers\HomeController::class, 'shop_product'])->name('shop-product');
+
 Route::group(['namespace' => 'auth'], function () {
     Route::get('register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
     Route::post('register', [App\Http\Controllers\Auth\RegisterController::class, 'register_action'])->name('register.action');
@@ -10,7 +13,6 @@ Route::group(['namespace' => 'auth'], function () {
     Route::get('forgot', [App\Http\Controllers\Auth\RegisterController::class, 'forgot_the_password']);
     Route::get('activate', [App\Http\Controllers\Auth\RegisterController::class, 'activate']);
     Route::get('reset_password', [App\Http\Controllers\Auth\RegisterController::class, 'reset_password']);
-    Route::get('/', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
     Route::get('login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
     Route::post('login', [App\Http\Controllers\Auth\LoginController::class, 'login_action'])->name('login.action');
     Route::get('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
