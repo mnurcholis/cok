@@ -551,8 +551,8 @@
             <div class="row gy-6 gy-lg-0">
                 <div class="col-md-4 col-lg-3">
                     <div class="widget">
-                        <img class="mb-4" src="{{ asset('assets_front/img/logo-light.png') }}"
-                            srcset="{{ asset('assets_front/img/logo-light@2x.png') }} 2x" alt="" />
+                        <img class="mb-4" src="{{ url('') }}/assets/img/{{ coba()->logo }}"
+                            srcset="{{ url('') }}/assets/img/{{ coba()->logo }} 2x" alt="" />
                         <p class="mb-4">© 2023 Sandbox. <br class="d-none d-lg-block" />All rights reserved.</p>
                         <nav class="nav social social-white">
                             <a href="#"><i class="uil uil-twitter"></i></a>
