@@ -115,7 +115,7 @@
                 processing: true,
                 serverSide: true,
                 lengthChange: false,
-                paging: false,
+                paging: true,
                 info: false,
                 iDisplayLength: 5,
                 order: [],
