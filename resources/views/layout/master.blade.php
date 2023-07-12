@@ -7,13 +7,13 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', $page_title ?? '') - @if(!empty($setting->app_name)){{ $setting->app_name }} @else {{ config('app.name') }} @endif</title>
+    <title>@yield('title', $page_title ?? '') - @if(!empty(coba()->app_name)){{ coba()->app_name }} @else {{ config('app.name') }} @endif</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="{{ url('assets/img/'.$setting->favicon) }}" rel="icon">
-    <link href="{{ url('assets/img/'.$setting->favicon) }}" rel="apple-touch-icon">
+    <link href="{{ url('') }}/assets/img/{{ coba()->favicon }}" rel="icon">
+    <link href="{{ url('') }}/assets/img/{{ coba()->favicon }}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     {{-- <link href="https://fonts.gstatic.com" rel="preconnect"> --}}

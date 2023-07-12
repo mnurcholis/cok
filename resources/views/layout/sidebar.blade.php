@@ -10,6 +10,24 @@
         </li><!-- End Dashboard Nav -->
 
         <li class="nav-item">
+            <a class="nav-link {{ active_class(['admin/produk/*']) }}" data-bs-target="#components-produk" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-menu-button-wide"></i><span>Produk</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="components-produk" class="nav-content collapse  {{ show_class(['admin/produk/*']) }}" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{ url('admin/produk/kategori') }}" class="{{ is_active_route(['admin/produk/kategori']) }}">
+                        <i class="bi bi-circle"></i><span>Kategori</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url('admin/produk/produk') }}" class="{{ is_active_route(['admin/produk/produk']) }}{{ is_active_route(['admin/produk/create']) }}">
+                        <i class="bi bi-circle"></i><span>Produk</span>
+                    </a>
+                </li>
+            </ul>
+        </li><!-- End Components Nav -->
+
+        <li class="nav-item">
             <a class="nav-link {{ active_class(['admin/data/*']) }}" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i><span>Master Data</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>

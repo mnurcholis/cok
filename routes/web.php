@@ -30,6 +30,28 @@ Route::group(['namespace' => 'admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::get('home', [App\Http\Controllers\Admin\HomeController::class, 'index']);
     /*
     |--------------------------------------------------------------------------
+    | Kategori
+    |--------------------------------------------------------------------------
+    */
+    Route::get('produk/kategori', [App\Http\Controllers\Admin\KategoriController::class, 'index']);
+    Route::get('kategori/json', [App\Http\Controllers\Admin\KategoriController::class, 'json'])->name('kategori.list');
+    Route::post('kategori/save', [App\Http\Controllers\Admin\KategoriController::class, 'save'])->name('save.kategori');
+    Route::post('kategori/update', [App\Http\Controllers\Admin\KategoriController::class, 'update'])->name('update.kategori');
+    Route::delete('delete_kategori', [App\Http\Controllers\Admin\KategoriController::class, 'delete']);
+    /*
+    |--------------------------------------------------------------------------
+    | Produk
+    |--------------------------------------------------------------------------
+    */
+    Route::get('produk/produk', [App\Http\Controllers\Admin\ProdukController::class, 'index']);
+    Route::get('produk/create', [App\Http\Controllers\Admin\ProdukController::class, 'create'])->name('create.produk');
+    Route::get('produk/json', [App\Http\Controllers\Admin\ProdukController::class, 'json'])->name('produk.list');
+    Route::post('produk/save', [App\Http\Controllers\Admin\ProdukController::class, 'save'])->name('upload-produk');
+    // Route::post('kategori/update', [App\Http\Controllers\Admin\KategoriController::class, 'update'])->name('update.kategori');
+    // Route::delete('delete_kategori', [App\Http\Controllers\Admin\KategoriController::class, 'delete']);
+    /*
+    /*
+    |--------------------------------------------------------------------------
     | Operator / Provider
     |--------------------------------------------------------------------------
     */
