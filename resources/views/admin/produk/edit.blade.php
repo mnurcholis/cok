@@ -9,22 +9,23 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Tambah Produk</h5>
-                        <form id="uploadForm" action="{{ route('upload-produk') }}" method="POST"
+                        <h5 class="card-title">{{ $page_title }}</h5>
+                        <form id="uploadForm" action="{{ route('update-produk', $produk->id) }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
                             <div class="row mb-3">
                                 <label for="nama" class="col-sm-2 col-form-label">Nama Produk</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="nama" name="nama"
-                                        placeholder="Nama Produk" required>
+                                        placeholder="Nama Produk" value="{{ $produk->nama }}" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="harga" class="col-sm-2 col-form-label">Harga</label>
                                 <div class="col-sm-10">
                                     <input type="number" class="form-control" id="harga" name="harga"
-                                        placeholder="Harga" required>
+                                        placeholder="Harga" value="{{ $produk->harga }}" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -40,12 +41,21 @@
                             </div>
                             <div class="row mb-3">
                                 <div id="gambarList" class="col-sm-12 row align-items-start" style="list-style-type: none;">
+                                    @foreach ($produk->gambar as $gambar)
+                                        <div class="col">
+                                            <img src="{{ url('/') }}{{ Storage::url($gambar->path) }}"
+                                                alt="Gambar Upload" style="max-width: 200px; margin: 10px;">
+                                            <button type="button" data-id="{{ $gambar->id }}"
+                                                class="btn btn-outline-danger btn-sm delete-gambar"><i
+                                                    class="bi bi-trash-fill"></i></button>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="description" class="col-sm-2 col-form-label">Deskripsi</label>
                                 <div class="col-sm-10">
-                                    <textarea class="form-control" style="height: 100px" name="description" id="description"></textarea>
+                                    <textarea class="form-control" style="height: 100px" name="description" id="description">{{ $produk->description }}</textarea>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -54,13 +64,12 @@
                                     @foreach ($kategori as $val)
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="{{ $val->id }}"
-                                                name="kategori[]" value="{{ $val->id }}">
-                                            <label class="form-check-label" for="{{ $val->id }}">
-                                                {{ $val->kategori }}
-                                            </label>
+                                                name="kategori[]" value="{{ $val->id }}"
+                                                {{ in_array($val->id, $produk->kategori->pluck('id')->toArray()) ? 'checked' : '' }}>
+                                            <label class="form-check-label"
+                                                for="{{ $val->id }}">{{ $val->kategori }}</label>
                                         </div>
                                     @endforeach
-
                                 </div>
                             </div>
                             <fieldset class="row mb-3">
@@ -68,31 +77,24 @@
                                 <div class="col-sm-10">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="status" id="gridRadios1"
-                                            value="aktif" checked="">
-                                        <label class="form-check-label" for="gridRadios1">
-                                            Aktif
-                                        </label>
+                                            value="aktif" {{ $produk->status === 'aktif' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="gridRadios1">Aktif</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="status" id="gridRadios2"
-                                            value="tidak_aktif">
-                                        <label class="form-check-label" for="gridRadios2">
-                                            Tidak Aktif
-                                        </label>
+                                            value="tidak_aktif" {{ $produk->status === 'tidak_aktif' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="gridRadios2">Tidak Aktif</label>
                                     </div>
                                 </div>
                             </fieldset>
-
                             <div class="row mb-3">
                                 <div class="col-sm-12 text-center">
                                     <button type="submit" class="btn btn-primary">Simpan</button>
                                 </div>
                             </div>
-
                         </form>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
@@ -104,7 +106,6 @@
         const gambarInput = document.getElementById('gambarInput');
         const gambarList = document.getElementById('gambarList');
         const uploadForm = document.getElementById('uploadForm');
-
         const uploadedImages = [];
 
         tambahGambarBtn.addEventListener('click', function() {
@@ -126,8 +127,8 @@
 
                         // Create delete button
                         const deleteButton = document.createElement('button');
-                        deleteButton.innerHTML = `<i class="bi bi-trash-fill"></i>`;
-                        deleteButton.classList.add('btn', 'btn-outline-danger', 'btn-sm');
+                        deleteButton.innerHTML = '<i class="bi bi-trash-fill"></i>';
+                        deleteButton.classList.add('btn', 'btn-outline-danger', 'btn-sm', 'delete-gambar');
                         deleteButton.addEventListener('click', function() {
                             // Remove the image and file from the list
                             imageContainer.remove();
@@ -144,7 +145,61 @@
                 }
                 gambarInput.value = null; // Reset the input field
             }
+            console.log(uploadedImages);
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.delete-gambar');
+
+            deleteButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    const imageContainer = button.parentNode;
+                    const imgElement = imageContainer.querySelector('img');
+                    const src = imgElement.src;
+
+                    // Remove the image container from the list
+                    imageContainer.remove();
+
+                    // Remove the image from the uploadedImages array
+                    const index = uploadedImages.findIndex(function(image) {
+                        return image.src === src;
+                    });
+                    if (index !== -1) {
+                        uploadedImages.splice(index, 1);
+                    }
+
+                    const id = button.getAttribute('data-id');
+                    console.log(id);
+
+                    // Add the CSRF token to the AJAX request headers
+                    const token = document.querySelector('meta[name="csrf-token"]').getAttribute(
+                        'content');
+                    const headers = {
+                        'X-CSRF-TOKEN': token,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    };
+
+                    // Send the AJAX request
+                    fetch('{{ url('admin/produk/hapus_gambar') }}', {
+                            method: 'DELETE',
+                            headers: headers,
+                            body: JSON.stringify({
+                                id: id
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                });
+            });
+        });
+
+
 
         uploadForm.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -158,7 +213,7 @@
             }
 
             // Perform the file upload using Ajax or fetch API
-            fetch('{{ route('upload-produk') }}', {
+            fetch('{{ route('update-produk', $produk->id) }}', {
                     method: 'POST',
                     body: formData
                 })
@@ -166,8 +221,6 @@
                 .then(data => {
                     // Handle the response from the server
                     if (data.success) {
-                        // File upload was successful
-                        // console.log('Upload successful');
                         swal({
                                 text: data.info,
                                 icon: 'success',
@@ -175,10 +228,9 @@
                                 buttons: false,
                             })
                             .then(() => {
-                                window.location.href = `{{ url('admin/produk/produk') }}`;
-                            })
+                                window.location.href = '{{ url('admin/produk/produk') }}';
+                            });
                     } else {
-                        // File upload failed
                         console.error('Upload failed');
                     }
                 })

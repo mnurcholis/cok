@@ -46,10 +46,11 @@ Route::group(['namespace' => 'admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::get('produk/produk', [App\Http\Controllers\Admin\ProdukController::class, 'index']);
     Route::get('produk/create', [App\Http\Controllers\Admin\ProdukController::class, 'create'])->name('create.produk');
     Route::get('produk/json', [App\Http\Controllers\Admin\ProdukController::class, 'json'])->name('produk.list');
+    Route::get('/edit-produk/{id}', [App\Http\Controllers\Admin\ProdukController::class, 'edit'])->name('edit-produk');
     Route::post('produk/save', [App\Http\Controllers\Admin\ProdukController::class, 'save'])->name('upload-produk');
-    // Route::post('kategori/update', [App\Http\Controllers\Admin\KategoriController::class, 'update'])->name('update.kategori');
-    // Route::delete('delete_kategori', [App\Http\Controllers\Admin\KategoriController::class, 'delete']);
-    /*
+    Route::put('/produk/update/{id}', [App\Http\Controllers\Admin\ProdukController::class, 'update'])->name('update-produk');
+    Route::delete('produk/hapus_gambar', [App\Http\Controllers\Admin\ProdukController::class, 'hapus_gambar'])->name('hapus-gambar');
+    Route::delete('produk/delete', [App\Http\Controllers\Admin\ProdukController::class, 'delete']);
     /*
     |--------------------------------------------------------------------------
     | Operator / Provider
@@ -88,4 +89,3 @@ Route::group(['namespace' => 'admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::get('settings', [App\Http\Controllers\Admin\SettingController::class, 'index']);
     Route::post('save_settings', [App\Http\Controllers\Admin\SettingController::class, 'save']);
 });
-

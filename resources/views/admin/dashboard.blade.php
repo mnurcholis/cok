@@ -12,14 +12,14 @@
                     <div class="col-xxl-4 col-md-4">
                         <div class="card info-card sales-card">
                             <div class="card-body">
-                                <h5 class="card-title">Total Operator</h5>
+                                <h5 class="card-title">Total Kategori</h5>
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="bi bi-people"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>{{ $total_operator }}</h6>
+                                        <h6>{{ $total_kategori }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -31,14 +31,14 @@
                     <div class="col-xxl-4 col-md-4">
                         <div class="card info-card revenue-card">
                             <div class="card-body">
-                                <h5 class="card-title">Total Site</h5>
+                                <h5 class="card-title">Total Produk</h5>
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="bi bi-pin-angle"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>{{ $total_site }}</h6>
+                                        <h6>{{ $total_produk }}</h6>
                                     </div>
                                 </div>
                             </div>

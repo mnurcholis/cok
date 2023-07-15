@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('gambar_produks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_user')->nullable();
-            $table->unsignedBigInteger('id_produk');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('produk_id');
             $table->string('path');
             $table->timestamps();
         });

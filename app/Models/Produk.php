@@ -14,12 +14,12 @@ class Produk extends Model
     // Mendefinisikan relasi Many-to-Many dengan model Kategori
     public function kategori()
     {
-        return $this->belongsToMany(Kategori::class, 'kategori', 'produk_id');
+        return $this->belongsToMany(Kategori::class, 'produk_kategoris', 'produk_id', 'kategori_id');
     }
 
     // Mendefinisikan relasi One-to-Many dengan model Gambar
     public function gambar()
     {
-        return $this->hasMany(Gambar_produks::class, 'id_produk');
+        return $this->hasMany(Gambar_produks::class, 'produk_id');
     }
 }

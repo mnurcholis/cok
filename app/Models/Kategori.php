@@ -11,9 +11,8 @@ class Kategori extends Model
 
     protected $guarded = [];
 
-    // Mendefinisikan relasi Many-to-Many dengan model Produk
     public function produk()
     {
-        return $this->belongsToMany(Produk::class, 'kategori', 'id_kategori', 'id');
+        return $this->belongsToMany(Produk::class, 'produk_kategoris', 'kategori_id', 'produk_id');
     }
 }

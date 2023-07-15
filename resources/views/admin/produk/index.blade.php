@@ -14,9 +14,11 @@
                         <table class="table table-hover table-bordered" id="table_produk">
                             <thead>
                                 <tr>
-                                    <th scope="col" style="width: 60%">Nama</th>
+                                    <th scope="col">#</th>
+                                    <th scope="col" style="width: 50%">Nama</th>
                                     <th scope="col" style="width: 20%">Harga</th>
-                                    <th scope="col" style="width:20%">Action</th>
+                                    <th scope="col" style="width: 20%">Kategori</th>
+                                    <th scope="col" style="width:10%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -29,21 +31,27 @@
         </div>
     </section>
 
-    <div class="modal fade" id="modal_delete_produk" tabindex="-1" data-bs-backdrop="static" role="dialog">
-        <div class="modal-dialog modal-dialog-centered">
+    <!-- Delete Produk Modal -->
+    <div class="modal fade" id="modal_delete_produk" tabindex="-1" data-bs-backdrop="static"
+        aria-labelledby="modal_delete_produkLabel" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Delete Produk ?? <b id="delete_name"></b></h5>
+                    <h5 class="modal-title" id="modal_delete_produkLabel">Delete Produk</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this Produk?</p>
+                    <input type="hidden" id="delete_produk_id" value="">
+                    <div id="delete_produk_name"></div>
+                </div>
                 <div class="modal-footer">
-                    <input type="hidden" class="form-control" name="delete_id" id="delete_id">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close">Close</button>
-                    <button type="button" class="btn btn-primary" id="delete" name="delete">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirm_delete_produk">Delete</button>
                 </div>
             </div>
         </div>
-    </div><!-- End Delete Links Name Modal-->
+    </div>
 @endsection
 
 @push('custom-scripts')
@@ -60,19 +68,41 @@
                 processing: true,
                 serverSide: true,
                 lengthChange: false,
-                paging: false,
+                paging: true,
                 info: false,
                 iDisplayLength: 5,
                 order: [],
                 ajax: "{{ route('produk.list') }}",
                 columns: [{
+                        data: 'id',
+                        name: 'id',
+                        orderable: false,
+                    },
+                    {
                         data: 'nama',
                         name: 'nama',
                         orderable: false,
-                    }, {
+                    },
+                    {
                         data: 'harga',
                         name: 'harga',
                         orderable: false,
+                        render: function(data) {
+                            var rupiah = formatRupiah(data, 'Rp. ');
+                            return rupiah;
+                        }
+                    },
+                    {
+                        data: 'kategori',
+                        name: 'kategori',
+                        orderable: false,
+                        render: function(data) {
+                            var badges = data.map(function(kategori) {
+                                return '<span class="badge bg-info">' + kategori.kategori +
+                                    '</span>';
+                            });
+                            return badges.join(' '); // Join the HTML badges
+                        },
                     },
                     {
                         data: 'action',
@@ -84,15 +114,35 @@
             });
         });
 
-        $(document).on("click", "#button_delete_kategori", function() {
-            var id = $(this).data('id');
-            var name = $(this).data('name');
-            $("#delete_id").val(id);
-            $("#delete_name").text(name);
+        // Function to format the number to rupiah format
+        function formatRupiah(angka, prefix) {
+            var numberString = angka.toString().replace(/[^,\d]/g, ''),
+                split = numberString.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix === undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+        }
+
+        // Delete Produk Confirmation
+        $('#modal_delete_produk').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget);
+            var produkId = button.data('id');
+            var produkName = button.data('name');
+            var modal = $(this);
+            modal.find('#delete_produk_id').val(produkId);
+            modal.find('#delete_produk_name').text('Produk Name: ' + produkName);
         });
 
-        $(document).on("click", "#delete", function() {
-            var id = $('#delete_id').val();
+        $(document).on("click", "#confirm_delete_produk", function() {
+            var id = $('#delete_produk_id').val();
             if (id == '') {
                 swal({
                         text: 'Can\'t Delete This Item..',
@@ -100,12 +150,12 @@
                         buttons: false,
                     })
                     .then(() => {
-                        $('#modal_delete_kategori').modal('hide');
-                    })
+                        $('#modal_delete_produk').modal('hide');
+                    });
             } else {
                 // processing ajax request
                 $.ajax({
-                    url: "{{ url('admin/delete_kategori') }}",
+                    url: "{{ url('admin/produk/delete') }}",
                     type: 'DELETE',
                     dataType: "json",
                     data: {
@@ -113,16 +163,15 @@
                     },
                     beforeSend: function() {
                         /* Show image container */
-                        $("#delete").prop("disabled", true);
+                        $("#confirm_delete_produk").prop("disabled", true);
                         $("#close").prop("disabled", true);
-                        $('#delete').html(
+                        $('#confirm_delete_produk').html(
                             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-                        );
+                            );
                     },
                     success: function(result) {
-                        // console.log(result);
                         if (result.status == true) {
-                            $('#modal_delete_kategori').modal('hide');
+                            $('#modal_delete_produk').modal('hide');
                             swal({
                                     text: result.info,
                                     icon: 'success',
@@ -131,7 +180,7 @@
                                 })
                                 .then(() => {
                                     table.ajax.reload();
-                                })
+                                });
                         } else {
                             swal({
                                     text: 'Error.. Can\'t Delete',
@@ -139,19 +188,18 @@
                                     buttons: false,
                                 })
                                 .then(() => {
-                                    $('#modal_delete_kategori').modal('hide');
-                                })
+                                    $('#modal_delete_produk').modal('hide');
+                                });
                         }
                     },
                     complete: function(data) {
                         // Hide image container
                         $("#close").prop("disabled", false);
-                        $("#delete").prop("disabled", false);
-                        $('#delete').html('Delete');
+                        $("#confirm_delete_produk").prop("disabled", false);
+                        $('#confirm_delete_produk').html('Delete');
                     }
                 });
             }
-
         });
     </script>
 @endpush

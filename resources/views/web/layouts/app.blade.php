@@ -13,6 +13,7 @@
     <link rel="shortcut icon" href="{{ url('') }}/assets/img/{{ coba()->favicon }}">
     {!! Html::style('assets_front/css/plugins.css') !!}
     {!! Html::style('assets_front/css/style.css') !!}
+    @stack('style-css')
 </head>
 
 <body>
