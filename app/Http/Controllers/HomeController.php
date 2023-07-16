@@ -10,13 +10,14 @@ class HomeController extends Controller
     public function index()
     {
         $page_title = 'Home';
-        $produk = Produk::with(['kategori', 'gambar'])->paginate(6);
+        $produk = Produk::with(['kategori', 'gambar'])->simplePaginate(6);
 
         return view('web.home', compact(['page_title', 'produk']));
     }
 
-    public function shop_product()
+    public function shop_product($id)
     {
-        return view('web.shop');
+        $data = Produk::with('gambar')->find($id);
+        return view('web.shop', compact(['data']));
     }
 }

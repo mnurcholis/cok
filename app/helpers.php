@@ -21,3 +21,10 @@ function show_class($path)
 function coba(){
     return \App\Models\Settings::find(1);
 }
+
+if (!function_exists('get_menu_web')) {
+    function get_menu_web()
+    {
+        return \App\Models\Menu::where('parent_id', '=', 0)->get();
+    }
+}

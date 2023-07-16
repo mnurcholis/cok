@@ -3,13 +3,6 @@
     <div class="d-flex align-items-center justify-content-between">
         <a href="{{ url(auth()->user()->type) }}" class="logo d-flex align-items-center">
             <img src="{{ url('') }}/assets/img/{{ coba()->logo }}" alt="">
-            <span class="d-none d-lg-block">
-                @if (!empty(coba()->app_name))
-                    {{ coba()->app_name }}
-                @else
-                    {{ config('app.name') }}
-                @endif
-            </span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->

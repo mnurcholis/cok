@@ -69,8 +69,10 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <h2 class="post-title h3 fs-22"><a href="./shop-product"
-                                            class="link-dark">{{ $item->nama }}</a></h2>
+                                    <h2 class="post-title h3 fs-22">
+                                        <a href="{{ route('shop-product', ['id' => $item->id]) }}"
+                                            class="link-dark">{{ $item->nama }}</a>
+                                    </h2>
                                     <p class="price">
                                         <ins>
                                             <span class="amount">
@@ -90,22 +92,8 @@
             <!-- /.grid -->
             <nav class="d-flex justify-content-center" aria-label="pagination">
                 <ul class="pagination">
-                    <!-- Previous Page Link -->
-                    <li class="page-item {{ $produk->onFirstPage() ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $produk->previousPageUrl() }}" aria-label="Previous">
-                            <span aria-hidden="true"><i class="uil uil-arrow-left"></i></span>
-                        </a>
-                    </li>
-
                     <!-- Pagination Links -->
                     {{ $produk->links() }}
-
-                    <!-- Next Page Link -->
-                    <li class="page-item {{ !$produk->hasMorePages() ? 'disabled' : '' }}">
-                        <a class="page-link" href="{{ $produk->nextPageUrl() }}" aria-label="Next">
-                            <span aria-hidden="true"><i class="uil uil-arrow-right"></i></span>
-                        </a>
-                    </li>
                 </ul>
                 <!-- /.pagination -->
             </nav>

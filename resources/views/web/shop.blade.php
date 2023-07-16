@@ -26,51 +26,21 @@
                                 class="swiper swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden">
                                 <div class="swiper-wrapper" id="swiper-wrapper-b83d165adaf57451" aria-live="off"
                                     style="cursor: grab; transform: translate3d(0px, 0px, 0px);">
-                                    <div class="swiper-slide swiper-slide-active" role="group" aria-label="1 / 4"
-                                        style="width: 520px; margin-right: 10px;">
-                                        <figure class="rounded"><img src="./assets/img/photos/shs1.jpg"
-                                                srcset="./assets/img/photos/shs1@2x.jpg 2x" alt=""><a
-                                                class="item-link" href="./assets/img/photos/shs1@2x.jpg" data-glightbox=""
-                                                data-gallery="product-group"><i class="uil uil-focus-add"></i></a></figure>
-                                    </div>
-                                    <!--/.swiper-slide -->
-                                    <div class="swiper-slide swiper-slide-next" role="group" aria-label="2 / 4"
-                                        style="width: 520px; margin-right: 10px;">
-                                        <figure class="rounded"><img src="./assets/img/photos/shs2.jpg"
-                                                srcset="./assets/img/photos/shs2@2x.jpg 2x" alt=""><a
-                                                class="item-link" href="./assets/img/photos/shs2@2x.jpg" data-glightbox=""
-                                                data-gallery="product-group"><i class="uil uil-focus-add"></i></a></figure>
-                                    </div>
-                                    <!--/.swiper-slide -->
-                                    <div class="swiper-slide" role="group" aria-label="3 / 4"
-                                        style="width: 520px; margin-right: 10px;">
-                                        <figure class="rounded"><img src="./assets/img/photos/shs3.jpg"
-                                                srcset="./assets/img/photos/shs3@2x.jpg 2x" alt=""><a
-                                                class="item-link" href="./assets/img/photos/shs3@2x.jpg" data-glightbox=""
-                                                data-gallery="product-group"><i class="uil uil-focus-add"></i></a></figure>
-                                    </div>
-                                    <!--/.swiper-slide -->
-                                    <div class="swiper-slide" role="group" aria-label="4 / 4"
-                                        style="width: 520px; margin-right: 10px;">
-                                        <figure class="rounded"><img src="./assets/img/photos/shs4.jpg"
-                                                srcset="./assets/img/photos/shs4@2x.jpg 2x" alt=""><a
-                                                class="item-link" href="./assets/img/photos/shs4@2x.jpg" data-glightbox=""
-                                                data-gallery="product-group"><i class="uil uil-focus-add"></i></a></figure>
-                                    </div>
-                                    <!--/.swiper-slide -->
+                                    @foreach ($data->gambar as $gambar1)
+                                        <div class="swiper-slide swiper-slide-active" role="group" aria-label="1 / 4"
+                                            style="width: 520px; margin-right: 10px;">
+                                            <figure class="rounded"><img src="{{ url('/') }}{{ Storage::url($gambar1->path) }}"
+                                                    srcset="{{ url('/') }}{{ Storage::url($gambar1->path) }} 2x" alt=""><a
+                                                    class="item-link" href="{{ url('/') }}{{ Storage::url($gambar1->path) }}"
+                                                    data-glightbox="" data-gallery="product-group"><i
+                                                        class="uil uil-focus-add"></i></a></figure>
+                                        </div>
+                                        <!--/.swiper-slide -->
+                                    @endforeach
+
                                 </div>
                                 <!--/.swiper-wrapper -->
                                 <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
-                            </div>
-                            <div class="swiper-controls">
-                                <div class="swiper-navigation">
-                                    <div class="swiper-button swiper-button-prev swiper-button-disabled" tabindex="-1"
-                                        role="button" aria-label="Previous slide"
-                                        aria-controls="swiper-wrapper-b83d165adaf57451" aria-disabled="true"></div>
-                                    <div class="swiper-button swiper-button-next" tabindex="0" role="button"
-                                        aria-label="Next slide" aria-controls="swiper-wrapper-b83d165adaf57451"
-                                        aria-disabled="false"></div>
-                                </div>
                             </div>
                         </div>
                         <!-- /.swiper -->
@@ -78,24 +48,13 @@
                             class="swiper swiper-thumbs swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden">
                             <div class="swiper-wrapper" id="swiper-wrapper-273292a501113c21" aria-live="polite"
                                 style="transform: translate3d(0px, 0px, 0px);">
+                                @foreach ($data->gambar as $gambar1)
                                 <div class="swiper-slide swiper-slide-visible swiper-slide-active swiper-slide-thumb-active"
                                     role="group" aria-label="1 / 4" style="width: 96px; margin-right: 10px;"><img
-                                        src="./assets/img/photos/shs1-th.jpg"
-                                        srcset="./assets/img/photos/shs1-th@2x.jpg 2x" class="rounded" alt="">
+                                        src="{{ url('/') }}{{ Storage::url($gambar1->path) }}" srcset="{{ url('/') }}{{ Storage::url($gambar1->path) }} 2x"
+                                        class="rounded" alt="">
                                 </div>
-                                <div class="swiper-slide swiper-slide-visible swiper-slide-next" role="group"
-                                    aria-label="2 / 4" style="width: 96px; margin-right: 10px;"><img
-                                        src="./assets/img/photos/shs2-th.jpg"
-                                        srcset="./assets/img/photos/shs2-th@2x.jpg 2x" class="rounded" alt="">
-                                </div>
-                                <div class="swiper-slide swiper-slide-visible" role="group" aria-label="3 / 4"
-                                    style="width: 96px; margin-right: 10px;"><img src="./assets/img/photos/shs3-th.jpg"
-                                        srcset="./assets/img/photos/shs3-th@2x.jpg 2x" class="rounded" alt="">
-                                </div>
-                                <div class="swiper-slide swiper-slide-visible" role="group" aria-label="4 / 4"
-                                    style="width: 96px; margin-right: 10px;"><img src="./assets/img/photos/shs4-th.jpg"
-                                        srcset="./assets/img/photos/shs4-th@2x.jpg 2x" class="rounded" alt="">
-                                </div>
+                                @endforeach
                             </div>
                             <!--/.swiper-wrapper -->
                             <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
@@ -107,11 +66,8 @@
                 <!-- /column -->
                 <div class="col-lg-6">
                     <div class="post-header mb-5">
-                        <h2 class="post-title display-5"><a href="./shop-product.html" class="link-dark">Curology
-                                Skincare Set</a></h2>
-                        <p class="price fs-20 mb-2"><span class="amount">$55.00</span></p>
-                        <a href="#" class="link-body ratings-wrapper"><span class="ratings four"></span><span>(3
-                                Reviews)</span></a>
+                        <h2 class="post-title display-5">{{ $data->nama }}</h2>
+                        <p class="price fs-20 mb-2"><span class="amount">Rp. {{ number_format($data->harga, 0, '.', ',') }}</span></p>
                     </div>
                     <!-- /.post-header -->
                     <p class="mb-6">Cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus.
@@ -397,7 +353,8 @@
                             role="button" aria-label="Go to slide 1" aria-current="true"></span><span
                             class="swiper-pagination-bullet" tabindex="0" role="button"
                             aria-label="Go to slide 2"></span><span class="swiper-pagination-bullet" tabindex="0"
-                            role="button" aria-label="Go to slide 3"></span></div>
+                            role="button" aria-label="Go to slide 3"></span>
+                    </div>
                 </div>
             </div>
             <!-- /.swiper-container -->

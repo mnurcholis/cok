@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
-Route::get('/shop-product', [App\Http\Controllers\HomeController::class, 'shop_product'])->name('shop-product');
+Route::get('/shop-product/{id}', [App\Http\Controllers\HomeController::class, 'shop_product'])->name('shop-product');
 
 Route::group(['namespace' => 'auth'], function () {
     Route::get('register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
@@ -53,14 +53,15 @@ Route::group(['namespace' => 'admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::delete('produk/delete', [App\Http\Controllers\Admin\ProdukController::class, 'delete']);
     /*
     |--------------------------------------------------------------------------
-    | Operator / Provider
+    | Menu
     |--------------------------------------------------------------------------
     */
-    Route::get('data/operator', [App\Http\Controllers\Admin\OperatorController::class, 'index']);
-    Route::get('operator/json', [App\Http\Controllers\Admin\OperatorController::class, 'json'])->name('operator.list');
-    Route::post('operator/save', [App\Http\Controllers\Admin\OperatorController::class, 'save'])->name('save.operator');
-    Route::post('operator/update', [App\Http\Controllers\Admin\OperatorController::class, 'update'])->name('update.operator');
-    Route::delete('delete_operator', [App\Http\Controllers\Admin\OperatorController::class, 'delete']);
+    Route::get('setting/menu', [App\Http\Controllers\Admin\Setting\MenuController::class, 'index']);
+    Route::get('setting/menu/json', [App\Http\Controllers\Admin\Setting\MenuController::class, 'json'])->name('menu.list');
+    Route::get('setting/menu/daftar', [App\Http\Controllers\Admin\Setting\MenuController::class, 'daftar'])->name('menu.daftar');
+    Route::post('setting/menu/save', [App\Http\Controllers\Admin\Setting\MenuController::class, 'save'])->name('save.menu');
+    Route::post('setting/menu/update', [App\Http\Controllers\Admin\Setting\MenuController::class, 'update'])->name('update.menu');
+    Route::delete('delete_menu', [App\Http\Controllers\Admin\Setting\MenuController::class, 'delete']);
     /*
     |--------------------------------------------------------------------------
     | Site Operator
