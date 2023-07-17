@@ -32,6 +32,13 @@
         </li><!-- End Components Nav -->
 
         <li class="nav-item">
+            <a class="nav-link {{ active_class(['admin/page']) }}" href="{{ url('admin/page') }}">
+                <i class="bi bi-gear"></i>
+                <span>Settings Page</span>
+            </a>
+        </li><!-- End Profile Page Nav -->
+
+        <li class="nav-item">
             <a class="nav-link {{ active_class(['admin/setting/menu']) }}" href="{{ url('admin/setting/menu') }}">
                 <i class="bi bi-gear"></i>
                 <span>Settings Menu</span>

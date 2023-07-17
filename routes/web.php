@@ -1,6 +1,13 @@
 <?php
 
+use App\Http\Controllers\FileController;
 use Illuminate\Support\Facades\Route;
+
+Route::group(['prefix' => 'laravel-filemanager'], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
+
+Route::resource('file_image', FileController::class);
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 Route::get('/shop-product/{id}', [App\Http\Controllers\HomeController::class, 'shop_product'])->name('shop-product');
@@ -62,6 +69,14 @@ Route::group(['namespace' => 'admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::post('setting/menu/save', [App\Http\Controllers\Admin\Setting\MenuController::class, 'save'])->name('save.menu');
     Route::post('setting/menu/update', [App\Http\Controllers\Admin\Setting\MenuController::class, 'update'])->name('update.menu');
     Route::delete('delete_menu', [App\Http\Controllers\Admin\Setting\MenuController::class, 'delete']);
+    /*
+    |--------------------------------------------------------------------------
+    | Page
+    |--------------------------------------------------------------------------
+    */
+    Route::get('page', [App\Http\Controllers\Admin\PageController::class, 'index']);
+    Route::get('page/create', [App\Http\Controllers\Admin\PageController::class, 'create'])->name('create.page');
+    Route::get('page/json', [App\Http\Controllers\Admin\PageController::class, 'json'])->name('page.list');
     /*
     |--------------------------------------------------------------------------
     | Site Operator
