@@ -31,22 +31,22 @@
     </section>
 
     <!-- Delete Produk Modal -->
-    <div class="modal fade" id="modal_delete_produk" tabindex="-1" data-bs-backdrop="static"
-        aria-labelledby="modal_delete_produkLabel" aria-hidden="true">
+    <div class="modal fade" id="modal_delete_page" tabindex="-1" data-bs-backdrop="static"
+        aria-labelledby="modal_delete_pageLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modal_delete_produkLabel">Delete Produk</h5>
+                    <h5 class="modal-title" id="modal_delete_pageLabel">Delete Page</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to delete this Produk?</p>
-                    <input type="hidden" id="delete_produk_id" value="">
-                    <div id="delete_produk_name"></div>
+                    <p>Are you sure you want to delete this Page?</p>
+                    <input type="hidden" id="delete_page_id" value="">
+                    <div id="delete_page_title"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="confirm_delete_produk">Delete</button>
+                    <button type="button" class="btn btn-danger" id="confirm_delete_page">Delete</button>
                 </div>
             </div>
         </div>
@@ -115,17 +115,17 @@
         }
 
         // Delete Produk Confirmation
-        $('#modal_delete_produk').on('show.bs.modal', function(event) {
+        $('#modal_delete_page').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget);
-            var produkId = button.data('id');
-            var produkName = button.data('name');
+            var pageId = button.data('id');
+            var pageTitle = button.data('title');
             var modal = $(this);
-            modal.find('#delete_produk_id').val(produkId);
-            modal.find('#delete_produk_name').text('Produk Name: ' + produkName);
+            modal.find('#delete_page_id').val(pageId);
+            modal.find('#delete_page_title').text('page Name: ' + pageTitle);
         });
 
-        $(document).on("click", "#confirm_delete_produk", function() {
-            var id = $('#delete_produk_id').val();
+        $(document).on("click", "#confirm_delete_page", function() {
+            var id = $('#delete_page_id').val();
             if (id == '') {
                 swal({
                         text: 'Can\'t Delete This Item..',
@@ -133,12 +133,12 @@
                         buttons: false,
                     })
                     .then(() => {
-                        $('#modal_delete_produk').modal('hide');
+                        $('#modal_delete_page').modal('hide');
                     });
             } else {
                 // processing ajax request
                 $.ajax({
-                    url: "{{ url('admin/produk/delete') }}",
+                    url: "{{ url('admin/page/delete') }}",
                     type: 'DELETE',
                     dataType: "json",
                     data: {
@@ -146,15 +146,15 @@
                     },
                     beforeSend: function() {
                         /* Show image container */
-                        $("#confirm_delete_produk").prop("disabled", true);
+                        $("#confirm_delete_page").prop("disabled", true);
                         $("#close").prop("disabled", true);
-                        $('#confirm_delete_produk').html(
+                        $('#confirm_delete_page').html(
                             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
                         );
                     },
                     success: function(result) {
                         if (result.status == true) {
-                            $('#modal_delete_produk').modal('hide');
+                            $('#modal_delete_page').modal('hide');
                             swal({
                                     text: result.info,
                                     icon: 'success',
@@ -171,15 +171,15 @@
                                     buttons: false,
                                 })
                                 .then(() => {
-                                    $('#modal_delete_produk').modal('hide');
+                                    $('#modal_delete_page').modal('hide');
                                 });
                         }
                     },
                     complete: function(data) {
                         // Hide image container
                         $("#close").prop("disabled", false);
-                        $("#confirm_delete_produk").prop("disabled", false);
-                        $('#confirm_delete_produk').html('Delete');
+                        $("#confirm_delete_page").prop("disabled", false);
+                        $('#confirm_delete_page').html('Delete');
                     }
                 });
             }

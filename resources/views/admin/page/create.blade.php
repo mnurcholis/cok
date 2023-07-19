@@ -10,16 +10,17 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Tambah Page</h5>
-                        <form>
+                        <form action="{{ route('page.store') }}" method="POST">
+                            @csrf
                             <div class="mb-3">
                                 <label for="title" class="form-label">Title</label>
-                                <input type="text" class="form-control" id="title">
+                                <input type="text" class="form-control" id="title" name="title" required>
                             </div>
                             <div class="mb-3">
                                 <label for="desc" class="form-label">Desc</label>
-                                <textarea name="desc" class="my-editor form-control" id="desc" cols="30" rows="10"></textarea>
+                                <textarea name="desc" class="my-editor form-control" id="desc" cols="50" rows="40"></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
                         </form>
                     </div>
                 </div>
@@ -29,28 +30,23 @@
     </section>
 @endsection
 @push('style')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/dropzone.css"
-        integrity="sha256-6X2vamB3vs1zAJefAme/aHhUeJl13mYKs3VKpIGmcV4=" crossorigin="anonymous">
 @endpush
 @push('custom-scripts')
-    <script src="https://cdn.jsdelivr.net/npm/dropzone@5.9.2/dist/dropzone.js"
-        integrity="sha256-IXyEnLo8FpsoOLrRzJlVYymqpY29qqsMHUD2Ah/ttwQ=" crossorigin="anonymous"></script>
-
-    <script src="https://cdn.tiny.cloud/1/vlildav9tbxj7krj1ao5v3cuyxkx8p1j8kqfeo8nj5jgac9w/tinymce/5/tinymce.min.js"
+    <script src="https://cdn.tiny.cloud/1/ntnf44xuwietuzyond0qbg8p2e6eqo90pzbi04o4j1jzeiqk/tinymce/5/tinymce.min.js"
         referrerpolicy="origin"></script>
     <script>
+        var url =  "{{ url('') }}";
         var editor_config = {
-            path_absolute: "{{ url('') }}/",
+            path_absolute: url + "/",
             selector: 'textarea.my-editor',
             relative_urls: false,
-            height: '600px',
             plugins: [
-                "advlist autolink autosave lists link image charmap print preview hr anchor pagebreak",
+                "advlist autolink lists link image charmap print preview hr anchor pagebreak",
                 "searchreplace wordcount visualblocks visualchars code fullscreen",
                 "insertdatetime media nonbreaking save table directionality",
                 "emoticons template paste textpattern"
             ],
-            toolbar: "restoredraft insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
             file_picker_callback: function(callback, value, meta) {
                 var x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName(
                     'body')[0].clientWidth;
@@ -79,73 +75,5 @@
         };
 
         tinymce.init(editor_config);
-    </script>
-    <!-- end tiny mce editor -->
-    <script>
-        var uploadedDocumentMap = {}
-        let token = $("meta[name='csrf-token']").attr("content");
-        Dropzone.options.myAwesomeDropzone = {
-
-            url: `{{ route('file_image.store') }}`,
-            // maxFilesize: 2, // MB
-            addRemoveLinks: true,
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-            },
-            success: function(file, response) {
-                $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">')
-                uploadedDocumentMap[file.name] = response.name
-                uploadedDocumentMap[file.path] = response.path
-            },
-            removedfile: function(file) {
-                file.previewElement.remove()
-                var name = ''
-                var path = ''
-                if (typeof file.file_name !== 'undefined') {
-                    name = file.file_name
-                } else {
-                    name = uploadedDocumentMap[file.name]
-                    path = uploadedDocumentMap[file.path]
-                }
-                $('form').find('input[name="document[]"][value="' + name + '"]').remove();
-
-                // alert(name);
-                console.log(path);
-                console.log(name);
-                $.ajax({
-                    url: `/admin/file_image/${name}`,
-                    type: "DELETE",
-                    cache: false,
-                    data: {
-                        "_token": token
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        //show success message
-                        // Swal.fire({
-                        //     type: 'success',
-                        //     icon: 'success',
-                        //     title: `${response.message}`,
-                        //     showConfirmButton: false,
-                        //     timer: 3000
-                        // });
-
-                        //remove post on table
-                        // $(`#index_${post_id}`).remove();
-                    }
-                });
-            },
-            init: function() {
-                @if (isset($project) && $project->document)
-                    var files = {!! json_encode($project->document) !!}
-                    for (var i in files) {
-                        var file = files[i]
-                        this.options.addedfile.call(this, file)
-                        file.previewElement.classList.add('dz-complete')
-                        $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">')
-                    }
-                @endif
-            }
-        }
     </script>
 @endpush

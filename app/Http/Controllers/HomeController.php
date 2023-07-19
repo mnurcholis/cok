@@ -18,6 +18,8 @@ class HomeController extends Controller
     public function shop_product($id)
     {
         $data = Produk::with('gambar')->find($id);
-        return view('web.shop', compact(['data']));
+        $page_title = 'Detail ' . $data->nama;
+        $produk = Produk::inRandomOrder()->take(6)->get();
+        return view('web.shop', compact(['data','page_title','produk']));
     }
 }

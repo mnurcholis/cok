@@ -11,6 +11,7 @@ Route::resource('file_image', FileController::class);
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 Route::get('/shop-product/{id}', [App\Http\Controllers\HomeController::class, 'shop_product'])->name('shop-product');
+Route::get('/page/{slug}', [App\Http\Controllers\PageController::class, 'index'])->name('page.detail');
 
 Route::group(['namespace' => 'auth'], function () {
     Route::get('register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
@@ -77,6 +78,10 @@ Route::group(['namespace' => 'admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::get('page', [App\Http\Controllers\Admin\PageController::class, 'index']);
     Route::get('page/create', [App\Http\Controllers\Admin\PageController::class, 'create'])->name('create.page');
     Route::get('page/json', [App\Http\Controllers\Admin\PageController::class, 'json'])->name('page.list');
+    Route::post('page/store', [App\Http\Controllers\Admin\PageController::class, 'store'])->name('page.store');
+    Route::get('/edit-page/{id}', [App\Http\Controllers\Admin\PageController::class, 'edit'])->name('edit-page');
+    Route::post('update/{id}', [App\Http\Controllers\Admin\PageController::class, 'update'])->name('update-page');
+    Route::delete('page/delete', [App\Http\Controllers\Admin\PageController::class, 'delete']);
     /*
     |--------------------------------------------------------------------------
     | Site Operator
