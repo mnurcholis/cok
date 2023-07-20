@@ -10,6 +10,8 @@ Route::group(['prefix' => 'laravel-filemanager'], function () {
 Route::resource('file_image', FileController::class);
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+Route::get('galeri', [App\Http\Controllers\HomeController::class, 'galeri'])->name('galeri');
+Route::get('produk', [App\Http\Controllers\HomeController::class, 'produk'])->name('produk');
 Route::get('/shop-product/{id}', [App\Http\Controllers\HomeController::class, 'shop_product'])->name('shop-product');
 Route::get('/page/{slug}', [App\Http\Controllers\PageController::class, 'index'])->name('page.detail');
 
@@ -48,6 +50,16 @@ Route::group(['namespace' => 'admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::delete('delete_kategori', [App\Http\Controllers\Admin\KategoriController::class, 'delete']);
     /*
     |--------------------------------------------------------------------------
+    | Kategori
+    |--------------------------------------------------------------------------
+    */
+    Route::get('galeri', [App\Http\Controllers\Admin\GaleriController::class, 'index']);
+    Route::get('galeri/json', [App\Http\Controllers\Admin\GaleriController::class, 'json'])->name('galeri.list');
+    Route::post('galeri/save', [App\Http\Controllers\Admin\GaleriController::class, 'save'])->name('save.galeri');
+    Route::post('galeri/update', [App\Http\Controllers\Admin\GaleriController::class, 'update'])->name('update.galeri');
+    Route::delete('delete_galeri', [App\Http\Controllers\Admin\GaleriController::class, 'delete']);
+    /*
+    |--------------------------------------------------------------------------
     | Produk
     |--------------------------------------------------------------------------
     */
@@ -59,6 +71,18 @@ Route::group(['namespace' => 'admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::put('/produk/update/{id}', [App\Http\Controllers\Admin\ProdukController::class, 'update'])->name('update-produk');
     Route::delete('produk/hapus_gambar', [App\Http\Controllers\Admin\ProdukController::class, 'hapus_gambar'])->name('hapus-gambar');
     Route::delete('produk/delete', [App\Http\Controllers\Admin\ProdukController::class, 'delete']);
+    /*
+    |--------------------------------------------------------------------------
+    | PaketCCTV
+    |--------------------------------------------------------------------------
+    */
+    Route::get('paketcctv', [App\Http\Controllers\Admin\PaketcctvController::class, 'index']);
+    Route::get('paketcctv/create', [App\Http\Controllers\Admin\PaketcctvController::class, 'create'])->name('create.paketcctv');
+    Route::get('paketcctv/json', [App\Http\Controllers\Admin\PaketcctvController::class, 'json'])->name('paketcctv.list');
+    Route::get('/edit-paketcctv/{id}', [App\Http\Controllers\Admin\PaketcctvController::class, 'edit'])->name('edit-paketcctv');
+    Route::post('paketcctv/save', [App\Http\Controllers\Admin\PaketcctvController::class, 'save'])->name('upload-paketcctv');
+    Route::put('/paketcctv/update/{id}', [App\Http\Controllers\Admin\PaketcctvController::class, 'update'])->name('update-paketcctv');
+    Route::delete('paketcctv/delete', [App\Http\Controllers\Admin\PaketcctvController::class, 'delete']);
     /*
     |--------------------------------------------------------------------------
     | Menu

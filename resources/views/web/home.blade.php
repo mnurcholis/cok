@@ -267,56 +267,18 @@
                 <!-- /.row -->
                 <div class="grid grid-view projects-masonry">
                     <div class="row gx-md-6 gy-6 isotope">
-                        <div class="project item col-md-6 col-xl-4 drinks events">
-                            <figure class="overlay overlay-1 rounded"><a href="{{ asset('assets_front/img/photos/bgcctv.jpg') }}"
-                                    data-glightbox data-gallery="shots-group"> <img src="{{ asset('assets_front/img/photos/bgcctv.jpg') }}"
-                                        alt="" /></a>
-                                <figcaption>
-                                    <h5 class="from-top mb-0">Fringilla Nullam</h5>
-                                </figcaption>
-                            </figure>
-                        </div>
-                        <!-- /.project -->
-                        <div class="project item col-md-6 col-xl-4 events">
-                            <figure class="overlay overlay-1 rounded"><a href="{{ asset('assets_front/img/photos/sh9.jpg') }}"
-                                    data-glightbox data-gallery="shots-group"> <img src="{{ asset('assets_front/img/photos/sh9.jpg') }}"
-                                        alt="" /></a>
-                                <figcaption>
-                                    <h5 class="from-top mb-0">Ridiculus Parturient</h5>
-                                </figcaption>
-                            </figure>
-                        </div>
-                        <!-- /.project -->
-                        <div class="project item col-md-6 col-xl-4 drinks foods">
-                            <figure class="overlay overlay-1 rounded"><a href="{{ asset('assets_front/img/photos/bg7.jpg') }}"
-                                    data-glightbox data-gallery="shots-group"> <img src="{{ asset('assets_front/img/photos/bg7.jpg') }}"
-                                        alt="" /></a>
-                                <figcaption>
-                                    <h5 class="from-top mb-0">Ornare Ipsum</h5>
-                                </figcaption>
-                            </figure>
-                        </div>
-                        <!-- /.project -->
-                        <div class="project item col-md-6 col-xl-4 drinks foods">
-                            <figure class="overlay overlay-1 rounded"><a href="{{ asset('assets_front/img/photos/b8-full.jpg') }}"
-                                    data-glightbox data-gallery="shots-group"> <img src="{{ asset('assets_front/img/photos/b8-full.jpg') }}"
-                                        alt="" /></a>
-                                <figcaption>
-                                    <h5 class="from-top mb-0">Ornare Ipsum</h5>
-                                </figcaption>
-                            </figure>
-                        </div>
-                        <!-- /.project -->
-                        <div class="project item col-md-6 col-xl-4 drinks foods">
-                            <figure class="overlay overlay-1 rounded"><a href="{{ asset('assets_front/img/photos/bg7.jpg') }}"
-                                    data-glightbox data-gallery="shots-group"> <img src="{{ asset('assets_front/img/photos/bg7.jpg') }}"
-                                        alt="" /></a>
-                                <figcaption>
-                                    <h5 class="from-top mb-0">Ornare Ipsum</h5>
-                                </figcaption>
-                            </figure>
-                        </div>
-                        <!-- /.project -->
+                        @foreach ($galeri as $g)
+                            <div class="project item col-md-6 col-xl-4 drinks events">
+                                <figure class="overlay overlay-1"><a
+                                        href="{{ url('/') }}{{ Storage::url($g->path) }}" data-glightbox
+                                        data-gallery="shots-group"> <img
+                                            src="{{ url('/') }}{{ Storage::url($g->path) }}" alt="{{ $g->name }}" /></a>
+                                    <figcaption>
+                                        <h5 class="from-top mb-0">{{ $g->name }}</h5>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        @endforeach
                     </div>
                     <!-- /.row -->
                 </div>

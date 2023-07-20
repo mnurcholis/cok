@@ -32,6 +32,20 @@
         </li><!-- End Components Nav -->
 
         <li class="nav-item">
+            <a class="nav-link {{ active_class(['admin/paketcctv']) }}" href="{{ url('admin/paketcctv') }}">
+                <i class="bi bi-gear"></i>
+                <span>Paket CCTV</span>
+            </a>
+        </li><!-- End Profile Page Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link {{ active_class(['admin/galeri']) }}" href="{{ url('admin/galeri') }}">
+                <i class="bi bi-gear"></i>
+                <span>Galeri</span>
+            </a>
+        </li><!-- End Profile Page Nav -->
+
+        <li class="nav-item">
             <a class="nav-link {{ active_class(['admin/page']) }}" href="{{ url('admin/page') }}">
                 <i class="bi bi-gear"></i>
                 <span>Settings Page</span>
